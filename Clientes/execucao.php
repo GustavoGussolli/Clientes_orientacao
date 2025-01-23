@@ -71,6 +71,23 @@ do {
             break;
 
         case '4':
+
+            $id = readline("Informe o ID do cliente que deseja buscar: ");
+            $clienteDAO = new ClienteDAO();
+            $cliente = $clienteDAO->buscarCliente($id);
+
+            if ($cliente) {
+                printf(
+                    "Cliente encontrado: %d | %s | %s | %s | %s | \n",
+                    $cliente->getId(),
+                    $cliente->getTipo(),
+                    $cliente->getNomeSocial(),
+                    $cliente->getIdentificacao(),
+                    $cliente->getEmail()
+                );
+            } else {
+                echo "Cliente não encontrado!\n";
+            }
             break;
 
         case '5':
