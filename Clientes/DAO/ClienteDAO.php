@@ -43,7 +43,8 @@ class ClienteDAO
         }
     }
 
-    public function listarClientes(){
+    public function listarClientes()
+    {
         $sql = "SELECT * FROM clientes";
 
         $con = Conexao::getCon();
@@ -57,18 +58,19 @@ class ClienteDAO
         return $clientes;
     }
 
-    private function mapClientes(array $registros){
+    private function mapClientes(array $registros)
+    {
 
         $clientes = array();
 
-        foreach ($registros as $reg){
+        foreach ($registros as $reg) {
             $cliente = null;
 
-            if ($reg['tipo'] == 'F'){
+            if ($reg['tipo'] == 'F') {
                 $cliente = new ClientePf();
                 $cliente->setNome($reg['nome']);
                 $cliente->setCpf($reg['cpf']);
-            } else{
+            } else {
                 $cliente = new ClientePj();
                 $cliente->setRazaoSocial($reg['razao_social']);
                 $cliente->setCnpj($reg['cnpj']);
@@ -80,19 +82,28 @@ class ClienteDAO
             array_push($clientes, $cliente);
         }
         return $clientes;
-
     }
 
-    public function buscarCliente(int $id) {
+    public function buscarCliente(int $id)
+    {
         $sql = "SELECT * FROM clientes WHERE id = ?";
         $con = Conexao::getCon();
         $stm = $con->prepare($sql);
         $stm->execute([$id]);
         $registro = $stm->fetch();
-    
+
         if ($registro) {
             return $this->mapClientes([$registro])[0];
         }
         return null;
+    }
+
+    public function excluirCliente(int $id){
+
+        $sql = "DELETE FROM clientes WHERE id = ?";
+        $con = Conexao::getCon();
+        $stm = $con->prepare($sql);
+        $stm->execute([$id]);
+
     }
 }

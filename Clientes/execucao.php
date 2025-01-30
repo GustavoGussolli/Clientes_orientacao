@@ -91,6 +91,36 @@ do {
             break;
 
         case '5':
+
+            //EXCLUSÃO PELO ID DO CLIENTE
+
+            //1- listar clientes
+
+            $clienteDAO = new ClienteDAO();
+            $clientes = $clienteDAO->listarClientes();
+
+            foreach ($clientes as $c) {
+                printf(
+                    "%d | %s | %s | %s | %s | \n",
+                    $c->getId(),
+                    $c->getTipo(),
+                    $c->getNomeSocial(),
+                    $c->getIdentificacao(),
+                    $c->getEmail()
+                );
+            }
+
+            //2- solicitar ao usuario para informar o ID
+
+            $id = readline("Informe o ID do cliente que deseja excluir: ");
+
+            //3- Chamar o clienteDAO para remover da base de dados
+
+            $cliente = $clienteDAO->excluirCliente($id);
+
+            //4- informar que o cliente foi excluído
+            echo "Cliente excluido! \n";
+
             break;
 
         case '0':
